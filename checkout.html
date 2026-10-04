@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Checkout | Kavoo Luxury Cosmetics</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="checkout-page" style="background-color: var(--color-off-white);">
+
+    <!-- Simple Navigation for Checkout -->
+    <nav class="navbar scrolled"
+        style="position: relative; padding: 15px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">
+        <div class="nav-container" style="justify-content: center;">
+            <div class="logo"><a href="index.html">Kavoo</a></div>
+            <div style="position: absolute; right: 40px; color: var(--color-text-muted); font-size: 0.9rem;">
+                <i class="fa-solid fa-lock" style="color: var(--color-gold);"></i> Secure Checkout
+            </div>
+        </div>
+    </nav>
+
+    <!-- Checkout Main Content -->
+    <main class="checkout-layout">
+        <div class="container">
+            <h1 class="checkout-main-title">Complete Your Order</h1>
+
+            <form id="checkoutForm" class="checkout-grid" novalidate>
+
+                <!-- Left Column: Customer Info & Payment -->
+                <div class="checkout-col-left">
+
+                    <!-- Customer Information Section -->
+                    <section class="checkout-section">
+                        <div class="checkout-section-header">
+                            <span class="step-number">1</span>
+                            <h2>Customer Information</h2>
+                        </div>
+                        <div class="checkout-section-body">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="fullName">Full Name</label>
+                                    <input type="text" id="fullName" class="form-input" required
+                                        placeholder="Enter your full name">
+                                </div>
+                            </div>
+                            <div class="form-row split-2">
+                                <div class="form-group">
+                                    <label for="email">Email Address</label>
+                                    <input type="email" id="email" class="form-input" required
+                                        placeholder="Enter your email address">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mobile">Mobile Number</label>
+                                    <input type="tel" id="mobile" class="form-input" required
+                                        placeholder="Enter your 10-digit mobile number" pattern="[0-9]{10}">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="country">Country</label>
+                                    <select id="country" class="form-input" required>
+                                        <option value="" disabled selected>Select your country</option>
+                                        <option value="IN">India (Domestic)</option>
+                                        <option value="INT">International (Worldwide Shipping)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <h3 class="subsection-title">Shipping Address</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="address">Full Delivery Address</label>
+                                    <textarea id="address" class="form-input textarea" required
+                                        placeholder="Enter your complete street address, apartment, suite, etc."
+                                        rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-row split-3">
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input type="text" id="city" class="form-input" required placeholder="City">
+                                </div>
+                                <div class="form-group">
+                                    <label for="state">State</label>
+                                    <input type="text" id="state" class="form-input" required placeholder="State">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pincode">PIN Code / Postal Code</label>
+                                    <input type="text" id="pincode" class="form-input" required placeholder="PIN Code">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="notes">Order Notes (Optional)</label>
+                                    <textarea id="notes" class="form-input textarea"
+                                        placeholder="Notes about your order, e.g. special notes for delivery."
+                                        rows="2"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Payment Options Section -->
+                    <section class="checkout-section">
+                        <div class="checkout-section-header">
+                            <span class="step-number">2</span>
+                            <h2>Payment Options</h2>
+                        </div>
+                        <div class="checkout-section-body">
+                            <p class="payment-notice">All transactions are secure and encrypted. We only accept online
+                                payments.</p>
+
+                            <div class="payment-methods">
+                                <!-- UPI -->
+                                <label class="payment-method-card active">
+                                    <div class="payment-method-header">
+                                        <div class="payment-radio">
+                                            <input type="radio" name="paymentType" value="upi" checked>
+                                            <span class="custom-radio"></span>
+                                        </div>
+                                        <span class="payment-name">UPI Payment</span>
+                                        <div class="payment-icons">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg"
+                                                alt="UPI" width="40">
+                                        </div>
+                                    </div>
+                                    <div class="payment-method-details" style="display: block;">
+                                        <p class="payment-instruction">Enter your UPI ID or use any UPI app to scan and
+                                            pay.</p>
+                                        <input type="text" class="form-input"
+                                            placeholder="Enter UPI ID (e.g. name@bank)" id="upiId">
+                                        <div class="qr-placeholder"
+                                            style="margin-top: 15px; text-align: center; padding: 20px; border: 1px dashed var(--color-beige); border-radius: 4px;">
+                                            <i class="fa-solid fa-qrcode"
+                                                style="font-size: 3rem; color: var(--color-beige); margin-bottom: 10px;"></i>
+                                            <p style="font-size: 0.85rem; color: var(--color-text-muted);">QR Code will
+                                                be generated after clicking Pay Now</p>
+                                        </div>
+                                    </div>
+                                </label>
+
+                                <!-- Credit/Debit Card -->
+                                <label class="payment-method-card">
+                                    <div class="payment-method-header">
+                                        <div class="payment-radio">
+                                            <input type="radio" name="paymentType" value="card">
+                                            <span class="custom-radio"></span>
+                                        </div>
+                                        <span class="payment-name">Credit / Debit Card</span>
+                                        <div class="payment-icons"
+                                            style="font-size: 1.5rem; color: var(--color-text-muted); display:flex; gap: 5px;">
+                                            <i class="fa-brands fa-cc-visa"></i>
+                                            <i class="fa-brands fa-cc-mastercard"></i>
+                                            <i class="fa-brands fa-cc-amex"></i>
+                                        </div>
+                                    </div>
+                                    <div class="payment-method-details">
+                                        <div class="form-row">
+                                            <input type="text" class="form-input" id="cardNumber" placeholder="Card Number (e.g. 4111 1111 1111 1111)" maxlength="19">
+                                        </div>
+                                        <div class="form-row split-2" style="margin-top: 15px;">
+                                            <input type="text" class="form-input" id="cardExpiry" placeholder="MM / YY" maxlength="5">
+                                            <input type="password" class="form-input" id="cardCvv" placeholder="CVV" maxlength="4">
+                                        </div>
+                                        <div class="form-row" style="margin-top: 15px;">
+                                            <input type="text" class="form-input" id="cardName" placeholder="Name on Card">
+                                        </div>
+                                    </div>
+                                </label>
+
+                                <!-- Net Banking / Wallets -->
+                                <label class="payment-method-card">
+                                    <div class="payment-method-header">
+                                        <div class="payment-radio">
+                                            <input type="radio" name="paymentType" value="netbanking">
+                                            <span class="custom-radio"></span>
+                                        </div>
+                                        <span class="payment-name">Net Banking / Digital Wallets</span>
+                                        <div class="payment-icons"
+                                            style="font-size: 1.5rem; color: var(--color-text-muted);">
+                                            <i class="fa-solid fa-building-columns"></i>
+                                        </div>
+                                    </div>
+                                    <div class="payment-method-details">
+                                        <p class="payment-instruction">You will be redirected to our secure payment
+                                            gateway to choose your bank or wallet.</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+
+                <!-- Right Column: Order Summary -->
+                <div class="checkout-col-right">
+                    <section class="checkout-section summary-section sticky-summary">
+                        <div class="checkout-section-header">
+                            <h2>Order Summary</h2>
+                        </div>
+                        <div class="checkout-section-body">
+
+                            <div class="summary-items" id="checkoutSummaryItems">
+                                <!-- Inject via JS -->
+                            </div>
+
+                            <div class="summary-totals">
+                                <div class="summary-row">
+                                    <span>Subtotal</span>
+                                    <span id="checkoutSubtotal">₹0.00</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Shipping</span>
+                                    <span id="checkoutShipping">Select country</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Estimated Taxes</span>
+                                    <span id="checkoutTaxes">₹0.00</span>
+                                </div>
+                                <div class="summary-row total-row">
+                                    <span>Total Payable</span>
+                                    <span id="checkoutTotal" class="total-price">₹0.00</span>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary pay-now-btn" id="payNowBtn"
+                                style="width: 100%; margin-top: 30px; font-size: 1.1rem; padding: 18px;">
+                                <i class="fa-solid fa-lock" style="margin-right: 8px;"></i> Pay Now <span
+                                    id="payNowAmount"></span>
+                            </button>
+
+                            <div class="secure-badges">
+                                <span><i class="fa-solid fa-shield-check"></i> 256-bit SSL Secure</span>
+                                <span><i class="fa-solid fa-award"></i> Authentic Kavoo</span>
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Payment Gateway Modal Simulation -->
+    <div id="paymentGatewayOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center; backdrop-filter: blur(5px);">
+        <div class="gateway-box" style="background: white; padding: 40px; border-radius: 12px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
+            <div style="font-size: 2rem; color: var(--color-gold); margin-bottom: 20px;">
+                <i class="fa-solid fa-building-columns"></i>
+            </div>
+            <h3 style="font-family: var(--font-serif); margin-bottom: 10px; font-size: 1.5rem;">Kavoo Secure Gateway</h3>
+            <p id="gatewayStatusText" style="color: var(--color-text-muted); margin-bottom: 25px; font-size: 0.95rem;">Initializing secure connection...</p>
+            
+            <div class="spinner" style="margin: 0 auto; width: 40px; height: 40px; border: 3px solid rgba(212, 175, 55, 0.2); border-top-color: var(--color-gold); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+            
+            <div style="margin-top: 30px; font-size: 0.8rem; color: #a0a0a0; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <i class="fa-solid fa-lock"></i> 256-bit Bank-Grade Encryption
+            </div>
+        </div>
+    </div>
+    <style>
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+
+</html>

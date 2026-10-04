@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation | Kavoo Luxury Cosmetics</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="confirmation-page" style="background-color: var(--color-off-white);">
+
+    <!-- Simple Navigation -->
+    <nav class="navbar scrolled"
+        style="position: relative; padding: 15px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">
+        <div class="nav-container" style="justify-content: center;">
+            <div class="logo"><a href="index.html">Kavoo</a></div>
+        </div>
+    </nav>
+
+    <!-- Confirmation Main Content -->
+    <main class="confirmation-layout" style="padding: 100px 0;">
+        <div class="container" style="max-width: 800px; margin: 0 auto; text-align: center;">
+
+            <!-- Success Icon -->
+            <div class="success-icon slide-up-element"
+                style="color: var(--color-gold); font-size: 5rem; margin-bottom: 30px;">
+                <i class="fa-regular fa-circle-check"></i>
+            </div>
+
+            <h1 class="checkout-main-title slide-up-element delay-1" style="font-size: 3rem; margin-bottom: 20px;">Order
+                Confirmed</h1>
+            <p class="section-desc slide-up-element delay-1"
+                style="font-size: 1.1rem; color: var(--color-text-muted); margin-bottom: 50px;">
+                Thank you for your purchase. Your order has been placed successfully and is now being processed by our
+                team.
+            </p>
+
+            <!-- Order Details Box -->
+            <div class="confirmation-box slide-up-element delay-2">
+                <div class="confirmation-header">
+                    <h2>Order Details</h2>
+                    <span class="order-id" id="displayOrderId">#EK-00000000</span>
+                </div>
+
+                <div class="confirmation-body">
+                    <div class="conf-row">
+                        <span class="conf-label">Status</span>
+                        <span class="conf-value status-paid"><i class="fa-solid fa-check"></i> Paid via Online
+                            Payment</span>
+                    </div>
+
+                    <div class="conf-row split">
+                        <div class="conf-column" style="text-align: left;">
+                            <span class="conf-label">Customer Info</span>
+                            <span class="conf-value" id="confName">Customer Name</span>
+                            <span class="conf-value" id="confEmail"
+                                style="font-size: 0.9rem; color: var(--color-text-muted);">email@example.com</span>
+                            <span class="conf-value" id="confPhone"
+                                style="font-size: 0.9rem; color: var(--color-text-muted);">000-000-0000</span>
+                        </div>
+                        <div class="conf-column" style="text-align: right;">
+                            <span class="conf-label">Delivery Address</span>
+                            <span class="conf-value" id="confAddress">123 Street Name<br>City, State<br>Pincode</span>
+                        </div>
+                    </div>
+
+                    <div class="conf-items-section">
+                        <h3 class="conf-label"
+                            style="text-align: left; margin-bottom: 15px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 10px;">
+                            Ordered Products</h3>
+                        <div class="conf-items-list" id="confItemsList">
+                            <!-- Items injected via JS -->
+                        </div>
+                    </div>
+
+                    <div class="conf-totals"
+                        style="border-top: 1px solid rgba(0,0,0,0.05); padding-top: 20px; margin-top: 20px;">
+                        <div class="conf-row">
+                            <span class="conf-label">Order Date</span>
+                            <span class="conf-value" id="confDate" style="color: var(--color-black);">Date</span>
+                        </div>
+                        <div class="conf-row">
+                            <span class="conf-label">Subtotal</span>
+                            <span class="conf-value" id="confSubtotal">₹0.00</span>
+                        </div>
+                        <div class="conf-row">
+                            <span class="conf-label">Shipping</span>
+                            <span class="conf-value" id="confShipping">₹0.00</span>
+                        </div>
+                        <div class="conf-row">
+                            <span class="conf-label">Estimated Taxes</span>
+                            <span class="conf-value" id="confTaxes">₹0.00</span>
+                        </div>
+                        <div class="conf-row total-row"
+                            style="font-size: 1.4rem; font-weight: 600; font-family: var(--font-serif); margin-top: 15px;">
+                            <span>Total</span>
+                            <span id="confTotal">₹0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="confirmation-footer no-print"
+                    style="background-color: var(--color-off-white); padding: 25px; border-top: 1px solid rgba(0,0,0,0.05); text-align: center; display: flex; flex-direction: column; gap: 15px; align-items: center;">
+                    <p style="font-size: 0.95rem; color: var(--color-text-muted); margin-bottom: 5px;">
+                        Estimated Delivery: <strong style="color: var(--color-black);">3 - 5 Business Days</strong>
+                    </p>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; width: 100%;">
+                        <a href="#" id="printReceiptBtn" class="btn btn-primary" style="min-width: 200px;"><i class="fa-solid fa-download"></i> Download / Print Receipt</a>
+                        <a href="shop.html" class="btn btn-outline" style="min-width: 200px;">Continue Exploring</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <style>
+        /* Print Styles for Receipt */
+        @media print {
+            body { background-color: white !important; }
+            .navbar, .footer, .no-print, .success-icon, .checkout-main-title, .section-desc { display: none !important; }
+            .confirmation-layout { padding: 0 !important; margin: 0 !important; }
+            .confirmation-box { box-shadow: none !important; border: 2px solid #000 !important; border-radius: 0 !important; margin: 0 !important; max-width: 100% !important; }
+            .conf-row { border-bottom: 1px solid #333 !important; padding: 5px 0 !important; }
+            .conf-column span { display: block; }
+            * { color: black !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            body::before {
+                content: "Kavoo Luxury Cosmetics - Receipt";
+                display: block;
+                font-size: 24px;
+                font-weight: bold;
+                text-align: center;
+                margin-bottom: 20px;
+                font-family: serif;
+            }
+        }
+    </style>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer" style="padding: 40px 0 20px; text-align: center;">
+        <div class="container">
+            <h2 class="logo" style="color: var(--color-white); font-size: 1.5rem; margin-bottom: 20px;">Kavoo</h2>
+            <div class="footer-bottom" style="border: none; padding-top: 0; justify-content: center;">
+                <div style="display:flex; flex-direction:column; gap:5px; align-items: center;">
+                    <p>&copy; 2026 Kavoo Cosmetics. All rights reserved.</p>
+                    <p style="opacity: 0.6; font-size: 0.8rem;"><i class="fa-solid fa-shield-halved" style="margin-right:5px;"></i> We respect your privacy. No personal tracking.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track My Order | Kavoo Fragrances</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .track-container {
+            max-width: 600px;
+            margin: 150px auto 100px;
+            padding: 40px;
+            background: var(--color-white);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .track-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .track-header h1 {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            color: var(--color-black);
+            margin-bottom: 15px;
+        }
+
+        .track-header p {
+            color: var(--color-text-muted);
+            font-size: 1rem;
+        }
+
+        .track-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .track-form label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--color-black);
+        }
+
+        .track-form input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: var(--font-sans);
+            transition: border-color 0.3s;
+        }
+
+        .track-form input:focus {
+            outline: none;
+            border-color: var(--color-gold);
+        }
+
+        .track-btn {
+            width: 100%;
+            margin-top: 20px;
+            padding: 15px;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .tracking-result {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #f0f0f0;
+            display: none; /* Hidden by default */
+        }
+
+        .result-card {
+            background: #fcf9f4;
+            padding: 25px;
+            border-radius: 6px;
+            border-left: 4px solid var(--color-gold);
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .result-label {
+            color: var(--color-text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .result-value {
+            font-weight: 600;
+            color: var(--color-black);
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-processing { background: #fff7e6; color: #fa8c16; }
+        .status-shipped { background: #e6f7ff; color: #1890ff; }
+        .status-delivered { background: #f6ffed; color: #52c41a; }
+        .status-pending { background: #f5f5f5; color: #888; }
+        .status-cancelled { background: #fff1f0; color: #f5222d; }
+
+        .error-msg {
+            color: #ff4d4f;
+            background: #fff1f0;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        .loader {
+            display: none;
+            margin: 20px auto;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(212,175, 55, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--color-gold);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <button class="mobile-menu-btn" aria-label="Toggle Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <a href="index.html" class="logo">Kavoo</a>
+
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="index.html#featured">New Arrivals</a>
+                <a href="account.html">My Account</a>
+            </div>
+
+            <div class="nav-actions">
+                <a href="#" class="nav-icon" id="openSearchBtn"><i class="fa-solid fa-magnifying-glass"></i></a>
+                <a href="account.html" class="nav-icon"><i class="fa-regular fa-user"></i></a>
+                <a href="#" class="nav-icon cart-icon" id="openCartBtn">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="cart-badge" id="cartBadgeCount">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="track-container animate-on-scroll">
+            <div class="track-header">
+                <h1>Track Your Order</h1>
+                <p>Enter your details below to see the status of your luxury fragrance delivery.</p>
+            </div>
+
+            <form class="track-form" id="trackOrderForm">
+                <div class="form-group">
+                    <label for="trackOrderId">Order ID</label>
+                    <input type="text" id="trackOrderId" placeholder="e.g. EK-8472910" required>
+                </div>
+                <div class="form-group">
+                    <label for="trackContact">Email or Phone Number</label>
+                    <input type="text" id="trackContact" placeholder="email@example.com / +91..." required>
+                </div>
+                <button type="submit" class="btn btn-primary track-btn" id="trackSubmitBtn">Track Order</button>
+            </form>
+
+            <div class="loader" id="trackLoader"></div>
+            <div id="trackError" class="error-msg">Order not found. Please check your details and try again.</div>
+
+            <div class="tracking-result" id="trackingResult">
+                <h3>Order Status</h3>
+                <div class="result-card">
+                    <div class="result-row">
+                        <span class="result-label">Order Number</span>
+                        <span class="result-value" id="resOrderId"></span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Order Date</span>
+                        <span class="result-value" id="resOrderDate"></span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Status</span>
+                        <span id="resStatusBadge" class="status-badge"></span>
+                    </div>
+                    <div class="result-row" style="margin-top: 20px; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 15px;">
+                        <span class="result-label">Estimated Delivery</span>
+                        <span class="result-value" id="resDelivery">Expected within 3-5 business days</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h2 class="logo" style="color: var(--color-white)">Kavoo</h2>
+                    <p class="footer-desc">Elevating natural beauty through the perfect intersection of advanced science and modern luxury.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="shop.html">Fragrances</a></li>
+                        <li><a href="shop.html">Skincare</a></li>
+                        <li><a href="track-order.html">Track My Order</a></li>
+                        <li><a href="shop.html">Best Sellers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>About & Contact</h4>
+                    <ul>
+                        <li><a href="fragrance-finder.html">Fragrance Finder</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="mailto:hello@kavoo.com"><i class="fa-regular fa-envelope"></i> hello@kavoo.com</a></li>
+                        <li><a href="tel:+9168431275"><i class="fa-solid fa-phone"></i> +91 6843 1275</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h4>The Kavoo Society</h4>
+                    <p>Subscribe for exclusive access to new launches and luxury tips.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your Email Address" required>
+                        <button type="submit" class="btn btn-primary">Join</button>
+                    </form>
+                    <div class="social-links">
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div style="display:flex; flex-direction:column; gap:5px;">
+                    <p>&copy; 2026 Kavoo Fragrances. All rights reserved.</p>
+                    <p style="opacity: 0.6; font-size: 0.8rem;"><i class="fa-solid fa-shield-halved" style="margin-right:5px;"></i> We respect your privacy. No personal tracking.</p>
+                </div>
+                <div class="footer-legal">
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <a href="terms-of-service.html">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Search Overlay & Cart Panel (Handled by script.js) -->
+    <script src="script.js"></script>
+    <script>
+        // Inline tracking logic for faster implementation or move to script.js
+        document.getElementById('trackOrderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const orderId = document.getElementById('trackOrderId').value.trim();
+            const contact = document.getElementById('trackContact').value.trim();
+            const loader = document.getElementById('trackLoader');
+            const error = document.getElementById('trackError');
+            const result = document.getElementById('trackingResult');
+            const submitBtn = document.getElementById('trackSubmitBtn');
+
+            // UI Reset
+            error.style.display = 'none';
+            result.style.display = 'none';
+            loader.style.display = 'block';
+            submitBtn.disabled = true;
+
+            // Simulate Network Delay
+            setTimeout(() => {
+                const orders = JSON.parse(localStorage.getItem('ekavoo_orders')) || [];
+                // In a real app, we check if Order ID and Email/Phone match.
+                // For this demo, we'll match Order ID mainly.
+                const order = orders.find(o => o.id === orderId);
+
+                loader.style.display = 'none';
+                submitBtn.disabled = false;
+
+                if (order) {
+                    document.getElementById('resOrderId').textContent = order.id;
+                    document.getElementById('resOrderDate').textContent = order.date;
+                    const badge = document.getElementById('resStatusBadge');
+                    badge.textContent = order.status;
+                    badge.className = 'status-badge status-' + order.status.toLowerCase();
+                    result.style.display = 'block';
+                } else {
+                    error.style.display = 'block';
+                }
+            }, 1200);
+        });
+    </script>
+</body>
+
+</html>

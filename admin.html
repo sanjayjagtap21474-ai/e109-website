@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Kavoo</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin_styles.css">
+</head>
+
+<body class="admin-page">
+
+    <!-- Admin Login View -->
+    <div id="adminLoginView" class="admin-login-container">
+        <div class="admin-login-box">
+            <h1 style="font-family: var(--font-serif); margin-bottom: 30px; text-align: center;">Admin Panel</h1>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label>Admin ID / Email</label>
+                    <input type="text" id="adminId" class="form-input" required placeholder="admin@kavoo.com">
+                </div>
+                <div class="form-group" style="margin-top: 20px;">
+                    <label>Password</label>
+                    <input type="password" id="adminPassword" class="form-input" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 30px;">Access
+                    Dashboard</button>
+            </form>
+            <p id="adminLoginError"
+                style="color: #ff4d4f; font-size: 0.85rem; margin-top: 15px; display: none; text-align: center;">Invalid
+                credentials. Please try again.</p>
+        </div>
+    </div>
+
+    <!-- Admin OTP Verification View -->
+    <div id="adminOtpView" class="admin-otp-container" style="display: none;">
+        <div class="admin-otp-box">
+            <h2 style="font-family: var(--font-serif); margin-bottom: 10px; text-align: center;">Two-Step Verification
+            </h2>
+            <p style="text-align: center; color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 25px;">
+                Enter the 6-digit code sent to your registered contacts.<br>
+                <small>(Check console for simulated OTP)</small>
+            </p>
+
+            <form id="adminOtpForm">
+                <div class="otp-inputs">
+                    <input type="text" class="otp-input" maxlength="1" inputmode="numeric" required>
+                    <input type="text" class="otp-input" maxlength="1" inputmode="numeric" required>
+                    <input type="text" class="otp-input" maxlength="1" inputmode="numeric" required>
+                    <input type="text" class="otp-input" maxlength="1" inputmode="numeric" required>
+                    <input type="text" class="otp-input" maxlength="1" inputmode="numeric" required>
+                    <input type="text" class="otp-input" maxlength="1" inputmode="numeric" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Verify OTP</button>
+            </form>
+
+            <div style="margin-top: 25px; text-align: center;">
+                <p style="font-size: 0.85rem; color: var(--color-text-muted);">
+                    OTP expires in: <span id="otpCountdown">02:00</span>
+                </p>
+                <button id="resendOtpBtn" class="btn-outline"
+                    style="margin-top: 15px; padding: 10px 20px; font-size: 0.8rem; display: none;">Resend OTP</button>
+            </div>
+
+            <p id="adminOtpError"
+                style="color: #ff4d4f; font-size: 0.85rem; margin-top: 15px; display: none; text-align: center;"></p>
+        </div>
+    </div>
+
+    <!-- Mobile Admin Header -->
+    <div class="mobile-admin-header">
+        <button class="hamburger-btn" id="mobileMenuToggle">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="admin-logo" style="padding: 0; font-size: 1.2rem;">Kavoo</div>
+        <div style="width: 30px;"></div> <!-- Spacer -->
+    </div>
+
+    <!-- Admin Dashboard Main View -->
+    <div id="adminDashboardView" class="admin-dashboard-layout" style="display: none;">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <a href="index.html" class="admin-logo">Kavoo</a>
+            <nav class="admin-nav">
+                <button class="admin-nav-item active" data-content="sales">
+                    <i class="fa-solid fa-chart-line"></i> <span>Sales Dashboard</span>
+                </button>
+                <button class="admin-nav-item" data-content="orders">
+                    <i class="fa-solid fa-receipt"></i> <span>Order Management</span>
+                </button>
+                <button class="admin-nav-item" data-content="products">
+                    <i class="fa-solid fa-bottle-droplet"></i> <span>Product Management</span>
+                </button>
+                <button class="admin-nav-item" data-content="inventory">
+                    <i class="fa-solid fa-boxes-stacked"></i> <span>Inventory Management</span>
+                </button>
+                <button class="admin-nav-item" data-content="customers">
+                    <i class="fa-solid fa-users"></i> <span>Customer Management</span>
+                </button>
+                <button class="admin-nav-item" data-content="analytics">
+                    <i class="fa-solid fa-magnifying-glass-chart"></i> <span>Analytics</span>
+                </button>
+                <button class="admin-nav-item" data-content="prices">
+                    <i class="fa-solid fa-tag"></i> <span>Price & Discounts</span>
+                </button>
+                <button class="admin-nav-item" data-content="homepage">
+                    <i class="fa-solid fa-house-chimney-window"></i> <span>Storefront Editor</span>
+                </button>
+                <button class="admin-nav-item" data-content="footer">
+                    <i class="fa-solid fa-link"></i> <span>Footer Settings</span>
+                </button>
+                <button class="admin-nav-item" data-content="theme">
+                    <i class="fa-solid fa-palette"></i> <span>Theme Settings</span>
+                </button>
+                <button class="admin-nav-item" data-content="ai-quiz">
+                    <i class="fa-solid fa-brain"></i> <span>AI Recommendation</span>
+                </button>
+            </nav>
+            <div style="padding: 20px 30px;">
+                <button id="adminLogoutBtn" class="admin-nav-item" style="padding: 10px 0; opacity: 0.7;">
+                    <i class="fa-solid fa-power-off"></i> <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Header -->
+            <header class="admin-header">
+                <h1 class="admin-title" id="adminSectionTitle">Sales Dashboard</h1>
+                <div class="admin-user-info">
+                    <span style="font-size: 0.9rem; color: var(--color-text-muted);">Welcome, <strong
+                            style="color: var(--color-black);">Administrator</strong></span>
+                </div>
+            </header>
+
+            <!-- Sales Dashboard Pane -->
+            <div id="salesPane" class="admin-content-pane">
+                <!-- Low Stock Alert Banner -->
+                <div id="lowStockAlert" class="admin-card"
+                    style="display: none; border-left: 4px solid #ff4d4f; background: #fff1f0;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <i class="fa-solid fa-triangle-exclamation" style="color: #ff4d4f; font-size: 1.5rem;"></i>
+                        <div>
+                            <h4 style="margin: 0; color: #ff4d4f;">Low Stock Warning</h4>
+                            <p style="margin: 5px 0 0; font-size: 0.85rem; color: #666;" id="lowStockMessage">Some
+                                products are running low on stock. Please restock immediately.</p>
+                        </div>
+                        <button class="btn-outline"
+                            style="margin-left: auto; padding: 5px 15px; font-size: 0.8rem; border-color: #ff4d4f; color: #ff4d4f;"
+                            onclick="switchPane('inventory')">View Inventory</button>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card gold">
+                        <span class="stat-label">Total Sales</span>
+                        <span class="stat-value" id="statSales">₹0</span>
+                        <span class="stat-trend positive"><i class="fa-solid fa-arrow-up"></i> 12% vs last month</span>
+                    </div>
+                    <div class="stat-card black">
+                        <span class="stat-label">Today's Sales</span>
+                        <span class="stat-value" id="statTodaySales">₹0</span>
+                        <span class="stat-trend positive"><i class="fa-solid fa-arrow-up"></i> 5% vs yesterday</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Total Orders</span>
+                        <span class="stat-value" id="statOrders">0</span>
+                        <span class="stat-trend negative"><i class="fa-solid fa-arrow-down"></i> 2% vs last week</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Active Customers</span>
+                        <span class="stat-value" id="statUsers">0</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-charts-grid">
+                    <div class="admin-card">
+                        <h3>Sales Overview (Last 7 Days)</h3>
+                        <div class="chart-container">
+                            <canvas id="salesTrendChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="admin-card">
+                        <h3>Orders by Category</h3>
+                        <div class="chart-container">
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3>Recent Transactions</h3>
+                        <button class="btn-outline" style="padding: 5px 15px; font-size: 0.8rem;"
+                            onclick="switchPane('orders')">View All</button>
+                    </div>
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentOrdersTable">
+                                <!-- JS Injection -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Pane -->
+            <div id="analyticsPane" class="admin-content-pane" style="display: none;">
+                <div class="stats-grid">
+                    <div class="stat-card gold">
+                        <span class="stat-label"><i class="fa-solid fa-users" style="margin-right:8px;"></i> Live Visitors</span>
+                        <span class="stat-value" id="liveVisitorCount">0</span>
+                        <span class="stat-trend positive">Active in the last 5 minutes</span>
+                    </div>
+                    <div class="stat-card black">
+                        <span class="stat-label">Total Sessions</span>
+                        <span class="stat-value" id="totalSessionsCount">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Quiz Completion Rate</span>
+                        <span class="stat-value" id="quizCompletionRate">0%</span>
+                        <span class="stat-trend positive" id="quizFunnelText">0 started / 0 finished</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Total Pageviews</span>
+                        <span class="stat-value" id="totalPageviewsCount">0</span>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3>Visitor Activity Log (Last 100)</h3>
+                        <button class="btn-outline" style="padding: 5px 15px; font-size: 0.8rem;" onclick="loadAnalyticsData()"><i class="fa-solid fa-rotate-right"></i> Refresh</button>
+                    </div>
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Type</th>
+                                    <th>Path</th>
+                                    <th>Device</th>
+                                    <th>Location</th>
+                                    <th>Referrer</th>
+                                    <th>Session ID</th>
+                                </tr>
+                            </thead>
+                            <tbody id="visitorLogTable">
+                                <!-- JS Injection -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Management Pane -->
+            <div id="productsPane" class="admin-content-pane" style="display: none;">
+                <div class="admin-header" style="margin-bottom: 20px;">
+                    <h3>All Products</h3>
+                    <button class="btn btn-primary" id="addNewProductBtn">+ Add New Product</button>
+                </div>
+                <!-- Search for products -->
+                <div class="admin-card" style="padding: 15px 30px; margin-bottom: 30px;">
+                    <div class="search-group">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="productSearchInput" placeholder="Search products by name or category...">
+                    </div>
+                </div>
+                <div class="admin-card">
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminProductsTable">
+                                <!-- JS Injection -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inventory Management Pane -->
+            <div id="inventoryPane" class="admin-content-pane" style="display: none;">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-label">Total In-Stock</span>
+                        <span class="stat-value" id="invTotalStock">0</span>
+                    </div>
+                    <div class="stat-card gold">
+                        <span class="stat-label">Low Stock Items</span>
+                        <span class="stat-value" id="invLowStock">0</span>
+                    </div>
+                    <div class="stat-card black">
+                        <span class="stat-label">Out of Stock</span>
+                        <span class="stat-value" id="invOutStock">0</span>
+                    </div>
+                </div>
+
+                <div class="admin-card filter-card">
+                    <div class="search-filter-row">
+                        <div class="search-group">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="inventorySearchInput"
+                                placeholder="Search inventory by product name...">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>Category</th>
+                                    <th>Base Price</th>
+                                    <th>Current Stock</th>
+                                    <th>Stock Status</th>
+                                    <th>Quick Adjust</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminInventoryTable">
+                                <!-- JS Injection -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Management Pane -->
+            <div id="customersPane" class="admin-content-pane" style="display: none;">
+                <div class="admin-card filter-card">
+                    <div class="search-filter-row">
+                        <div class="search-group">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="customerSearchInput"
+                                placeholder="Search customers by name, email or phone...">
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-card">
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Join Date</th>
+                                    <th>Orders</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminCustomersTable">
+                                <!-- JS Injection -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Pane -->
+            <div id="analyticsPane" class="admin-content-pane" style="display: none;">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-label">Conversion Rate</span>
+                        <span class="stat-value">3.2%</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Avg. Order Value</span>
+                        <span class="stat-value">₹18,450</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Monthly Growth</span>
+                        <span class="stat-value">+15.4%</span>
+                    </div>
+                    <div class="stat-card gold">
+                        <span class="stat-label">Top Category</span>
+                        <span class="stat-value">Fragrance</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-charts-grid">
+                    <div class="admin-card" style="grid-column: span 2;">
+                        <h3>Product Performance (Revenue vs Units Sold)</h3>
+                        <div class="chart-container" style="height: 350px;">
+                            <canvas id="performanceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <h3>Monthly Sales Report</h3>
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Month</th>
+                                    <th>Orders</th>
+                                    <th>Revenue</th>
+                                    <th>Avg. Order</th>
+                                    <th>Growth</th>
+                                </tr>
+                            </thead>
+                            <tbody id="monthlyReportTable">
+                                <!-- JS Injection -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Management Pane -->
+            <div id="ordersPane" class="admin-content-pane" style="display: none;">
+                <div class="admin-card filter-card">
+                    <div class="search-filter-row">
+                        <div class="search-group">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="orderSearchInput"
+                                placeholder="Search orders by ID or customer name...">
+                        </div>
+                        <div class="filter-group">
+                            <select id="orderStatusFilter">
+                                <option value="all">All Statuses</option>
+                                <option value="pending">Pending</option>
+                                <option value="processing">Processing</option>
+                                <option value="shipped">Shipped</option>
+                                <option value="delivered">Delivered</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-card">
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Date</th>
+                                    <th>Customer Details</th>
+                                    <th>Amount</th>
+                                    <th>Items</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allOrdersTable">
+                                <!-- JS Injection -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Price & Discounts Pane -->
+            <div id="pricesPane" class="admin-content-pane" style="display: none;">
+                <div class="admin-card">
+                    <h3>Price & Discount Control</h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem;">Update specific product prices or
+                        create global discount offers.</p>
+                    <div class="form-row"
+                        style="margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label>Apply Global Discount (%)</label>
+                            <input type="number" class="form-input" placeholder="e.g. 10">
+                            <button class="btn btn-primary" id="applyDiscountBtn" style="margin-top: 15px;">Apply to
+                                All</button>
+                        </div>
+                        <div class="form-group">
+                            <label>Create Coupon Code</label>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" class="form-input" placeholder="LUXURY20">
+                                <button class="btn btn-outline" id="generateCouponBtn">Generate</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Homepage Updates Pane -->
+            <div id="homepagePane" class="admin-content-pane" style="display: none;">
+                <div class="admin-card">
+                    <h3>Homepage Storefront Editor</h3>
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label>Hero Banner Headline</label>
+                        <input type="text" id="heroHeadlineInput" class="form-input" value="Unlock Your Signature Scent">
+                    </div>
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label>Hero Banner Image URL</label>
+                        <input type="text" id="heroImageInput" class="form-input"
+                            value="https://images.unsplash.com/photo-1594035910387-fea47794261f" oninput="updateHeroPreview()">
+                        <p style="font-size: 0.8rem; color: #888; margin-top: 5px;">Changes will reflect immediately on
+                            the main landing page.</p>
+                    </div>
+                    
+                    <!-- Hero Image Preview -->
+                    <div class="form-group" style="margin-top: 25px;">
+                        <label>Hero Image Preview</label>
+                        <div id="heroPreviewContainer" style="width: 100%; height: 200px; border-radius: 8px; overflow: hidden; margin-top: 10px; border: 1px solid #eee; position: relative; background: #f9f9f9; display: flex; align-items: center; justify-content: center; background-size: cover; background-position: center;">
+                            <span id="heroPreviewPlaceholder" style="color: #ccc; font-size: 0.9rem;">No Image Selected</span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" id="updateStorefrontBtn" style="margin-top: 30px; width: 100%;">Update Storefront</button>
+                </div>
+            </div>
+
+            <!-- Footer Management Pane -->
+            <div id="footerPane" class="admin-content-pane" style="display: none;">
+                <div class="admin-card">
+                    <h3>Footer Settings</h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 20px;">Manage contact information and social media links displayed in the website footer automatically across all pages.</p>
+                    
+                    <h4 style="margin-top: 25px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 5px;">Contact Details</h4>
+                    <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="text" id="footerPhone" class="form-input" placeholder="+91 90000 00000">
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="footerEmail" class="form-input" placeholder="contact@kavoo.com">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label>Business Address</label>
+                        <textarea id="footerAddress" class="form-input" style="height: 80px;" placeholder="123 Luxury Avenue, Mumbai, India"></textarea>
+                    </div>
+
+                    <h4 style="margin-top: 35px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 5px;">Social Media Links</h4>
+                    <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label><i class="fa-brands fa-instagram"></i> Instagram URL</label>
+                            <input type="url" id="footerInsta" class="form-input" placeholder="https://instagram.com/...">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fa-brands fa-facebook"></i> Facebook URL</label>
+                            <input type="url" id="footerFb" class="form-input" placeholder="https://facebook.com/...">
+                        </div>
+                    </div>
+                    <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px;">
+                        <div class="form-group">
+                            <label><i class="fa-brands fa-whatsapp"></i> WhatsApp URL / Number</label>
+                            <input type="text" id="footerWa" class="form-input" placeholder="https://wa.me/...">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fa-brands fa-twitter"></i> Twitter / X URL</label>
+                            <input type="url" id="footerTwitter" class="form-input" placeholder="https://twitter.com/...">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fa-brands fa-youtube"></i> YouTube URL</label>
+                            <input type="url" id="footerYoutube" class="form-input" placeholder="https://youtube.com/...">
+                        </div>
+                    </div>
+
+                    <h4 style="margin-top: 35px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 5px;">Legal Pages Content</h4>
+                    <div class="form-group">
+                        <label>Privacy Policy Content (HTML allowed)</label>
+                        <textarea id="footerPrivacy" class="form-input" style="height: 150px;" placeholder="Enter Privacy Policy HTML content..."></textarea>
+                    </div>
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label>Terms of Service Content (HTML allowed)</label>
+                        <textarea id="footerTerms" class="form-input" style="height: 150px;" placeholder="Enter Terms of Service HTML content..."></textarea>
+                    </div>
+
+                    <button class="btn btn-primary" id="saveFooterBtn" style="margin-top: 30px; width: 100%;">Save / Update Footer</button>
+                </div>
+            </div>
+
+            <!-- Theme Management Pane -->
+            <div id="themePane" class="admin-content-pane" style="display: none;">
+                <div class="admin-card">
+                    <h3>Website Theme Management</h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 30px;">Customize the
+                        visual identity of Kavoo. Changes can be previewed before applying.</p>
+
+                    <div class="theme-editor-grid">
+                        <div class="theme-controls">
+                            <h4>Color Palette</h4>
+                            <div class="form-group" style="margin-top: 15px;">
+                                <label>Primary Color (Gold/Accents)</label>
+                                <input type="color" id="themePrimaryColor" class="form-input" value="#d4af37">
+                            </div>
+                            <div class="form-group" style="margin-top: 15px;">
+                                <label>Secondary Color (Dark Accents)</label>
+                                <input type="color" id="themeSecondaryColor" class="form-input" value="#1a1a1a">
+                            </div>
+                            <div class="form-group" style="margin-top: 15px;">
+                                <label>Background Color (Off-White)</label>
+                                <input type="color" id="themeBgColor" class="form-input" value="#fcf9f4">
+                            </div>
+
+                            <h4 style="margin-top: 30px;">Typography</h4>
+                            <div class="form-group" style="margin-top: 15px;">
+                                <label>Heading Font</label>
+                                <select id="themeHeadingFont" class="form-input">
+                                    <option value="'Playfair Display', serif">Playfair Display (Elegant)</option>
+                                    <option value="'Inter', sans-serif">Inter (Modern)</option>
+                                    <option value="'Lora', serif">Lora (Classic)</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin-top: 15px;">
+                                <label>Body Font</label>
+                                <select id="themeBodyFont" class="form-input">
+                                    <option value="'Inter', sans-serif">Inter (Modern)</option>
+                                    <option value="'Roboto', sans-serif">Roboto (Clean)</option>
+                                    <option value="'Lato', sans-serif">Lato (Soft)</option>
+                                </select>
+                            </div>
+
+                            <button class="btn btn-primary" id="saveThemeBtn"
+                                style="margin-top: 40px; width: 100%;">Save
+                                &
+                                Apply Theme</button>
+                            <button class="btn btn-outline" id="resetThemeBtn" style="margin-top: 10px; width: 100%;">
+                                Reset to
+                                Default</button>
+                        </div>
+
+                        <div class="theme-preview">
+                            <h4 style="margin-bottom: 15px;">Live Preview</h4>
+                            <div id="themePreviewBox" class="preview-frame">
+                                <div class="preview-nav">Kavoo</div>
+                                <div class="preview-hero">
+                                    <div class="preview-badge">New Arrival</div>
+                                    <div class="preview-title">Luxe Collection</div>
+                                    <p>Discover the essence of elegance.</p>
+                                    <div class="preview-btn">Shop Now</div>
+                                </div>
+                                <div class="preview-card">
+                                    <div class="preview-card-img"></div>
+                                    <div class="preview-card-title">Velvet Rose</div>
+                                    <div class="preview-card-price">$245.00</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- AI Recommendation Pane -->
+            <div id="ai-quizPane" class="admin-content-pane" style="display: none;">
+                <div class="admin-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3>AI Fragrance Recommendation System</h3>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <label style="font-weight: 500;">Enable Quiz System:</label>
+                            <input type="checkbox" id="quizToggleSwitch" style="transform: scale(1.5);">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-card" style="margin-top: 20px;">
+                    <h3>1. Edit Quiz Content & Logic</h3>
+                    <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top:20px;">
+                        <div class="form-group">
+                            <label>Result Title</label>
+                            <input type="text" id="quizResultTitle" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label>Result Description</label>
+                            <input type="text" id="quizResultDesc" class="form-input">
+                        </div>
+                    </div>
+                    <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top:15px;">
+                        <div class="form-group">
+                            <label>Trust Message</label>
+                            <input type="text" id="quizTrustMessage" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label>Match Logic</label>
+                            <select id="quizMatchLogic" class="form-input">
+                                <option value="single">Top Category Only</option>
+                                <option value="composite">Composite Matching</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" id="saveQuizContentBtn" style="margin-top:20px;">Save Content Settings</button>
+                </div>
+
+                <div class="admin-card" style="margin-top: 20px;">
+                    <h3>2. Question & Scoring Management</h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 20px;">Modify the quiz questions and scoring options below.</p>
+                    
+                    <div id="quizQuestionContainer">
+                        <!-- Questions mapped here by JS -->
+                    </div>
+                    
+                    <button class="btn btn-outline" id="quizAddQuestionBtn" style="margin-top:20px; width:100%;">+ Add New Question</button>
+                    <button class="btn btn-primary" id="saveQuizQuestionsBtn" style="margin-top:15px; width:100%;">Save Question Changes</button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Product Edit Modal (Simplified) -->
+    <div id="adminProductModal" class="modal" style="display: none; background: rgba(0,0,0,0.6);">
+        <div class="modal-content" style="max-width: 600px; padding: 40px; border-radius: 12px;">
+            <div class="modal-header">
+                <h2 style="font-family: var(--font-serif);" id="productModalTitle">Edit Product</h2>
+                <button class="close-modal" id="closeAdminModal">&times;</button>
+            </div>
+            <form id="adminProductForm" style="margin-top: 25px;">
+                <input type="hidden" id="editProductId">
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" id="editProductName" class="form-input" required>
+                </div>
+                <div class="form-row split-2" style="margin-top: 15px;">
+                    <div class="form-group">
+                        <label>Price (₹)</label>
+                        <input type="number" step="1" id="editProductPrice" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Stock Count</label>
+                        <input type="number" id="editProductStock" class="form-input" value="0" required>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top: 15px;">
+                    <label>Category</label>
+                    <select id="editProductCategory" class="form-input">
+                        <option value="fragrance">Fragrance</option>
+                        <option value="skincare">Skincare</option>
+                        <option value="makeup">Makeup</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-top: 15px;">
+                    <label style="font-weight: 600; margin-bottom: 10px; display: block;">Product Images (up to 3)</label>
+                    <div class="image-input-row">
+                        <div class="image-input-group">
+                            <label style="font-size:0.8rem; color:#888;">Image 1 (Main) *</label>
+                            <div style="display:flex; gap:10px; align-items:center;">
+                                <input type="text" id="editProductImage1" class="form-input" placeholder="https://..." required oninput="updateImagePreview('1')">
+                                <img id="imgPreview1" src="" alt="Preview 1" class="admin-img-preview" style="display:none;">
+                            </div>
+                        </div>
+                        <div class="image-input-group" style="margin-top:10px;">
+                            <label style="font-size:0.8rem; color:#888;">Image 2 (Optional)</label>
+                            <div style="display:flex; gap:10px; align-items:center;">
+                                <input type="text" id="editProductImage2" class="form-input" placeholder="https://..." oninput="updateImagePreview('2')">
+                                <img id="imgPreview2" src="" alt="Preview 2" class="admin-img-preview" style="display:none;">
+                            </div>
+                        </div>
+                        <div class="image-input-group" style="margin-top:10px;">
+                            <label style="font-size:0.8rem; color:#888;">Image 3 (Optional)</label>
+                            <div style="display:flex; gap:10px; align-items:center;">
+                                <input type="text" id="editProductImage3" class="form-input" placeholder="https://..." oninput="updateImagePreview('3')">
+                                <img id="imgPreview3" src="" alt="Preview 3" class="admin-img-preview" style="display:none;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top: 15px;">
+                    <label>Description</label>
+                    <textarea id="editProductDesc" class="form-input" style="height: 100px;"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 30px;">Save Product
+                    Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="adminToast" class="admin-toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="adminToastMsg">Success message here</span>
+    </div>
+
+    <!-- Admin Scripts -->
+    <script src="admin.js"></script>
+</body>
+
+</html>

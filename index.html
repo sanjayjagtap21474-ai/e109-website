@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kavoo | Luxury Cosmetics</title>
+    <meta name="description" content="Elevate Your Natural Beauty with Kavoo's premium cosmetic collection.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="home-page">
+
+    <!-- Hero Section -->
+    <header id="home" class="hero fade-in-section"
+        style="background-image: url('https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?q=100&w=2000&auto=format&fit=crop');"
+        aria-label="Luxury hero banner">
+        <div class="hero-content">
+            <h1 id="heroHeadline" class="brand-title slide-up-element">Kavoo</h1>
+            <p class="tagline slide-up-element delay-1">Elevate Your Natural Beauty</p>
+            <a href="shop.html" class="btn btn-primary slide-up-element delay-2">Shop Now</a>
+        </div>
+    </header>
+
+    <!-- Dedicated Navigation Section -->
+    <nav id="navbar" class="navbar home-nav">
+        <div class="nav-container">
+            <div class="logo"><a href="index.html">Kavoo</a></div>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="account.html">Account</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="#" aria-label="Search" id="openSearchBtn"><i class="fa-solid fa-magnifying-glass"></i></a>
+                <a href="account.html" aria-label="Account"><i class="fa-regular fa-user"></i></a>
+                <a href="#" aria-label="Cart" class="cart-icon-wrapper" id="openCartBtn">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="cart-badge" id="cartBadgeCount">0</span>
+                </a>
+                <button class="mobile-menu-btn" aria-label="Toggle Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Product Details Modal -->
+    <div id="productModal" class="product-modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close Modal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-body">
+                <div class="modal-image-container">
+                    <img src="" alt="Product Image" id="modalProductImage" class="modal-image zoom-image" style="transition: opacity 0.15s ease;">
+                    <div id="modalThumbnailStrip" class="modal-thumbnails" style="display:none;"></div>
+                    <div class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Hover to Zoom</div>
+                </div>
+                <div class="modal-info">
+                    <h2 id="modalProductTitle" class="modal-title">Product Title</h2>
+                    <p id="modalProductPrice" class="modal-price">₹0.00</p>
+                    <div class="modal-rating">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                            class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                            class="fa-solid fa-star"></i>
+                        <span class="review-count">(100 reviews)</span>
+                    </div>
+                    <p id="modalProductDesc" class="modal-desc">Detailed product description goes here.</p>
+
+                    <div class="modal-details">
+                        <div class="detail-group">
+                            <h4>Fragrance Notes</h4>
+                            <p id="modalProductNotes">Top: Bergamot, Heart: Rose, Base: Amber</p>
+                        </div>
+                        <div class="detail-group">
+                            <h4>Size</h4>
+                            <p id="modalProductSize">50ml / 1.7 oz</p>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <div class="quantity-selector">
+                            <button class="qty-btn minus" aria-label="Decrease Quantity"><i
+                                    class="fa-solid fa-minus"></i></button>
+                            <input type="number" id="modalProductQty" class="qty-input" value="1" min="1">
+                            <button class="qty-btn plus" aria-label="Increase Quantity"><i
+                                    class="fa-solid fa-plus"></i></button>
+                        </div>
+                        <button class="btn btn-primary add-to-cart-large">Add to Cart - <span
+                                id="modalBtnPrice">₹0.00</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h2 class="logo" style="color: var(--color-white)">Kavoo</h2>
+                    <p class="footer-desc">Elevating natural beauty through the perfect intersection of advanced science
+                        and modern luxury.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="shop.html">Fragrances</a></li>
+                        <li><a href="shop.html">Skincare</a></li>
+                        <li><a href="track-order.html">Track My Order</a></li>
+                        <li><a href="shop.html">Best Sellers</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>About & Contact</h4>
+                    <ul>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="mailto:hello@kavoo.com"><i class="fa-regular fa-envelope"></i>
+                                hello@kavoo.com</a></li>
+                        <li><a href="tel:+9168431275"><i class="fa-solid fa-phone"></i> +91 6843 1275</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h4>The Kavoo Society</h4>
+                    <p>Subscribe for exclusive access to new launches and luxury tips.</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" id="newsletterEmail" placeholder="Your Email Address" required>
+                        <button type="submit" class="btn btn-primary" id="newsletterSubmitBtn">Join</button>
+                    </form>
+                    <div id="newsletterSuccessMsg" class="newsletter-success-msg" style="display: none;">
+                        <p><i class="fa-solid fa-check-circle" style="color: #4CAF50; margin-right: 5px;"></i> Thank you
+                            for subscribing to Kavoo. You will now receive updates about our latest fragrances and
+                            luxury tips.</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#"><i class="fa-brands fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div style="display:flex; flex-direction:column; gap:5px;">
+                    <p>&copy; 2026 Kavoo Fragrances. All rights reserved. | <a href="admin.html"
+                            style="color: inherit; text-decoration: none; opacity: 0.5; font-size: 0.8rem;">Admin Login</a>
+                    </p>
+                    <p style="opacity: 0.6; font-size: 0.8rem;"><i class="fa-solid fa-shield-halved" style="margin-right:5px;"></i> We respect your privacy. No personal tracking.</p>
+                </div>
+                <div class="footer-legal">
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <a href="terms-of-service.html">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <button class="search-close" id="closeSearchBtn" aria-label="Close Search"><i
+                class="fa-solid fa-xmark"></i></button>
+        <div class="search-container">
+            <h2 class="search-title">What are you looking for?</h2>
+            <div class="search-input-wrapper">
+                <i class="fa-solid fa-magnifying-glass search-input-icon"></i>
+                <input type="text" id="searchInput" class="search-input"
+                    placeholder="Search for fragrances, skincare, or gifts..." autocomplete="off">
+            </div>
+
+            <div class="search-results-container">
+                <div class="search-results" id="searchResults">
+                    <!-- Results injected via JS -->
+                </div>
+                <div class="search-empty-msg" id="searchEmptyMsg" style="display: none;">
+                    No products found matching your search.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sliding Cart Overlay -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+    <!-- Sliding Cart Panel -->
+    <div class="cart-panel" id="cartPanel">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="cart-close" id="closeCartBtn" aria-label="Close Cart"><i
+                    class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <div class="cart-items" id="cartItemsContainer">
+            <!-- Cart Items injected via JS -->
+            <div class="empty-cart-message" id="emptyCartMessage">
+                Your cart is currently empty.
+            </div>
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-subtotal">
+                <span>Subtotal</span>
+                <span id="cartSubtotalValue">₹0.00</span>
+            </div>
+            <p class="cart-tax-note">Shipping & taxes calculated at checkout</p>
+            <div class="cart-buttons">
+                <button class="btn btn-outline" id="continueShoppingBtn"
+                    style="width: 100%; margin-bottom: 10px;">Continue Shopping</button>
+                <button class="btn btn-primary" id="checkoutBtn" style="width: 100%;">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+
+</html>

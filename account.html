@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account | Kavoo</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="account-page">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar scrolled">
+        <div class="nav-container">
+            <div class="logo"><a href="index.html">Kavoo</a></div>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="account.html" class="active">Account</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="#" aria-label="Search" id="openSearchBtn"><i class="fa-solid fa-magnifying-glass"></i></a>
+                <a href="account.html" aria-label="Account"><i class="fa-regular fa-user"></i></a>
+                <a href="#" aria-label="Cart" class="cart-icon-wrapper" id="openCartBtn">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="cart-badge" id="cartBadgeCount">0</span>
+                </a>
+                <button class="mobile-menu-btn" aria-label="Toggle Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="account-layout container">
+
+        <!-- Authentication View (Login/Signup) -->
+        <div id="authView" class="auth-container">
+            <div class="auth-box">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-target="loginForm">Log In</button>
+                    <button class="auth-tab" data-target="signupForm">Sign Up</button>
+                </div>
+
+                <!-- Login Form -->
+                <form id="loginForm" class="auth-form active">
+                    <h2 class="auth-title">Welcome Back</h2>
+                    <p class="auth-subtitle">Log in back to your Kavoo account.</p>
+                    <div class="form-group">
+                        <label for="loginEmail">Email or Mobile Number</label>
+                        <input type="text" id="loginEmail" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" class="form-input" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Log In</button>
+                    <a href="#" class="forgot-password">Forgot Password?</a>
+                </form>
+
+                <!-- Signup Form -->
+                <form id="signupForm" class="auth-form" style="display: none;">
+                    <h2 class="auth-title">Create Account</h2>
+                    <p class="auth-subtitle">Join the Kavoo society.</p>
+                    <div class="form-group">
+                        <label for="signupName">Full Name</label>
+                        <input type="text" id="signupName" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupEmail">Email</label>
+                        <input type="email" id="signupEmail" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupMobile">Mobile Number</label>
+                        <input type="tel" id="signupMobile" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPassword">Password</label>
+                        <input type="password" id="signupPassword" class="form-input" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Create
+                        Account</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Dashboard View (Logged In) -->
+        <div id="dashboardView" class="dashboard-container" style="display: none;">
+            <h1 class="dashboard-main-title">My Account</h1>
+
+            <div class="dashboard-grid">
+                <!-- Sidebar -->
+                <aside class="dashboard-sidebar">
+                    <div class="user-greeting">
+                        <div class="user-avatar"><i class="fa-regular fa-user"></i></div>
+                        <div>
+                            <p class="greeting-text">Hello,</p>
+                            <h3 class="user-name" id="displayUserName">User</h3>
+                        </div>
+                    </div>
+                    <nav class="dashboard-nav">
+                        <button class="dash-nav-btn active" data-tab="profileTab"><i class="fa-regular fa-id-badge"></i>
+                            My Profile</button>
+                        <button class="dash-nav-btn" data-tab="wishlistTab"><i class="fa-solid fa-ribbon"></i> My
+                            Wishlist</button>
+                        <button class="dash-nav-btn" data-tab="ordersTab"><i class="fa-solid fa-box-open"></i> My
+                            Orders</button>
+                        <button class="dash-nav-btn" data-tab="addressTab"><i class="fa-solid fa-location-dot"></i>
+                            Saved Address</button>
+                        <button class="dash-nav-btn" id="logoutBtn"><i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            Logout</button>
+                    </nav>
+                </aside>
+
+                <!-- Content Area -->
+                <div class="dashboard-content">
+
+                    <!-- My Profile Tab -->
+                    <div id="profileTab" class="dash-tab-content active">
+                        <h2 class="dash-title">My Profile</h2>
+                        <form id="profileForm" class="profile-form">
+                            <div class="form-row split-2">
+                                <div class="form-group">
+                                    <label for="profileName">Full Name</label>
+                                    <input type="text" id="profileName" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profileMobile">Mobile Number</label>
+                                    <input type="tel" id="profileMobile" class="form-input" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="profileEmail">Email Address</label>
+                                <input type="email" id="profileEmail" class="form-input" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <span id="profileSuccessMsg" class="success-inline"
+                                style="display: none; color: #4CAF50; margin-left: 15px;"><i
+                                    class="fa-solid fa-check"></i> Profile updated successfully!</span>
+                        </form>
+                    </div>
+
+                    <!-- My Orders Tab -->
+                    <div id="ordersTab" class="dash-tab-content" style="display: none;">
+                        <h2 class="dash-title">My Orders</h2>
+                        <div class="orders-list">
+                            <!-- Mock Data for Orders -->
+                            <div class="order-card">
+                                <div class="order-card-header">
+                                    <div>
+                                        <span class="order-id">#EK-8472910</span>
+                                        <span class="order-date">Placed on Oct 24, 2026</span>
+                                    </div>
+                                    <span class="order-status delivered">Delivered</span>
+                                </div>
+                                <div class="order-card-body">
+                                    <div class="order-items-preview">
+                                        <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=200&auto=format&fit=crop"
+                                            class="order-thumb" alt="Oud Absolute">
+                                    </div>
+                                    <div class="order-total">
+                                        Total: <span>$264.60</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="empty-state" style="display: none;">
+                                <i class="fa-solid fa-box-open empty-icon"></i>
+                                <p>You haven't placed any orders yet.</p>
+                                <a href="shop.html" class="btn btn-outline"
+                                    style="margin-top: 15px; display: inline-block;">Start Shopping</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Saved Address Tab -->
+                    <div id="addressTab" class="dash-tab-content" style="display: none;">
+                        <h2 class="dash-title">Saved Address</h2>
+                        <form id="addressForm" class="profile-form">
+                            <div class="form-group">
+                                <label for="profileAddress">Full Address</label>
+                                <input type="text" id="profileAddress" class="form-input"
+                                    placeholder="House/Flat No., Street, Area" required>
+                            </div>
+                            <div class="form-row split-3">
+                                <div class="form-group">
+                                    <label for="profileCity">City</label>
+                                    <input type="text" id="profileCity" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profileState">State</label>
+                                    <input type="text" id="profileState" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profilePincode">PIN Code</label>
+                                    <input type="text" id="profilePincode" class="form-input" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Address</button>
+                            <span id="addressSuccessMsg" class="success-inline"
+                                style="display: none; color: #4CAF50; margin-left: 15px;"><i
+                                    class="fa-solid fa-check"></i> Address updated successfully!</span>
+                        </form>
+                    </div>
+
+                    <!-- My Wishlist Tab -->
+                    <div id="wishlistTab" class="dash-tab-content" style="display: none;">
+                        <h2 class="dash-title">My Wishlist</h2>
+                        <div class="wishlist-grid" id="wishlistItems">
+                            <!-- Wishlist items injected via JS -->
+                        </div>
+                        <div id="wishlistEmptyMsg" class="empty-state">
+                            <i class="fa-solid fa-ribbon empty-icon"></i>
+                            <p>Your wishlist is empty. Add some beauty to it!</p>
+                            <a href="shop.html" class="btn btn-outline"
+                                style="margin-top: 15px; display: inline-block;">Browse Shop</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" style="margin-top: auto;">
+        <div class="container">
+            <div class="footer-bottom" style="border-top: none; padding-top: 20px;">
+                <div style="display:flex; flex-direction:column; gap:5px;">
+                    <p>&copy; 2026 Kavoo Fragrances. All rights reserved. | <a href="admin.html"
+                            style="color: inherit; text-decoration: none; opacity: 0.5; font-size: 0.8rem;">Admin Login</a>
+                    </p>
+                    <p style="opacity: 0.6; font-size: 0.8rem;"><i class="fa-solid fa-shield-halved" style="margin-right:5px;"></i> We respect your privacy. No personal tracking.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+
+</html>
